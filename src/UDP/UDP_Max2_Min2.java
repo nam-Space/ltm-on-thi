@@ -2,42 +2,41 @@ package UDP;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class UDP_Max2_Min2 {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, UnknownHostException {
         DatagramSocket socket = new DatagramSocket();
         InetAddress sA = InetAddress.getByName("203.162.10.109");
         int sP = 2207;
-
-        // a. Gửi mã sinh viên và mã câu hỏi
-        String code = ";B21DCCN553;6PzfxrtX";
+        
+        String code = ";B21DCCN214;kvmzsjdJ";
         DatagramPacket dpGui = new DatagramPacket(code.getBytes(), code.length(), sA, sP);
         socket.send(dpGui);
-
-        // b. Nhận dữ liệu từ server
-        byte[] buffer = new byte[1024];
+        
+        byte [] buffer = new byte[1024];
         DatagramPacket dpNhan = new DatagramPacket(buffer, buffer.length);
         socket.receive(dpNhan);
-        String tmp = new String(dpNhan.getData()).trim();
-        System.out.println(tmp);
-
-        // c. Xử lý chuỗi và gửi lại kết quả
-        tmp = tmp.replace(';', ' ');
-        tmp = tmp.replace(',', ' ');
-        String[] tmp1 = tmp.trim().split("\\s+");
-        String rqID = tmp1[0];
+        
+        String s = new String(dpNhan.getData());
+        s = s.replace(",", ";");
+        System.out.println(s);
+        String []arrStr = s.trim().split("\\;");
+        String rqId = arrStr[0];
         ArrayList<Integer> a = new ArrayList<>();
-        for (int i = 1; i < tmp1.length; i++) a.add(Integer.parseInt(tmp1[i]));
+        for (int i = 1; i < arrStr.length; i++) {
+        	a.add(Integer.parseInt(arrStr[i]));
+        }
         Collections.sort(a);
-        int nho = a.get(1);
-        int lon = a.get(a.size() - 2);
-        String res = String.format("%s;%d,%d", rqID, lon, nho); 
+        int max2 = a.get(a.size() - 2);
+        int min2 = a.get(1);
+        String res = rqId + ";" + max2 + "," + min2;
         System.out.println(res);
+        
         DatagramPacket dpGui1 = new DatagramPacket(res.getBytes(), res.length(), sA, sP);
         socket.send(dpGui1);
-
-        // d. Đóng socket
+        
         socket.close();
     }
 }
