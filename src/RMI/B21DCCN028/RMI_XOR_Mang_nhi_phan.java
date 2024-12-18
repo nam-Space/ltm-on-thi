@@ -16,7 +16,7 @@ public class RMI_XOR_Mang_nhi_phan {
 		String ptit = "PTIT";
 		byte[] ptitByte = ptit.getBytes();
 		for (int i = 0; i < a.length; i++) {
-			a[i] = (byte) (a[i] ^ (ptitByte[i % ptitByte.length]));
+			a[i] = (byte) ((int)a[i] ^ ((int)ptitByte[i % ptitByte.length]));
 		}
 		System.out.println();
 		for (byte x : a) System.out.print(x + " ");

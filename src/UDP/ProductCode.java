@@ -12,7 +12,7 @@ public class ProductCode {
 		InetAddress sA = InetAddress.getByName("203.162.10.109");
 		int sP = 2209;
 		
-		String code = ";B21DCCN509;yxVxODkM";
+		String code = ";B21DCCN015;AUDGLYae";
 		DatagramPacket dpGui = new DatagramPacket(code.getBytes(), code.length(), sA, sP);
 		socket.send(dpGui);
 		
