@@ -1,7 +1,6 @@
 package RMI.B21DCCN564;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.registry.*;
 
 import RMI.CharacterService;
 
